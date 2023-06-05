@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DemoController;
 
@@ -15,8 +16,25 @@ use App\Http\Controllers\DemoController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('posts',[
+        'posts'=> Post::all()
+    ]);
 });
+Route::get('/posts/{post}', function($slug){
+    return view('post', [
+        'post'=> Post::findOrFail($slug)
+    ]);
+});
+
+// Route::get('/posts/{post}', function ($slug) {
+//     $path =__DIR__."/../resources/posts/{$slug}.html";
+
+//     if (!file_exists($path)) {
+//         return redirect('/');
+//     }
+//   $post= cache()->remember('posts.{$slug}', 1200, fn() => file_get_contents($path));
+//     return view('post', ['post'=> $post]);
+// })->where('post', '[A-z_\-]+');
 
 // Route::get('/demo/{name}/{age}', [DemoController::class, 'DemoAction']);
 // Route::Post('/demo/{email}', [DemoController::class, 'DemoAction']);
