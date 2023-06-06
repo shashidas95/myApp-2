@@ -16,9 +16,23 @@ use App\Http\Controllers\DemoController;
 */
 
 Route::get('/', function () {
+<<<<<<< HEAD
     return view('posts',[
         'posts'=> Post::all()
     ]);
+=======
+    return view('posts');
+});
+
+Route::get('/posts/{post}', function ($slug) {
+    $path =__DIR__."/../resources/posts/{$slug}.html";
+
+    if (!file_exists($path)) {
+        return redirect('/');
+    }
+    $post = file_get_contents($path);
+    return view('post', ['post'=> $post]);
+>>>>>>> 6c871828bb4af2409565b2b270c4e15cabdf2cdd
 });
 Route::get('/posts/{post}', function($slug){
     return view('post', [
